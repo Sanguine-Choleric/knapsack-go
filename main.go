@@ -7,29 +7,8 @@ import (
 	"strconv"
 )
 
-type KnapsackSolution struct {
-	kp         *KnapsackProblem
-	takenItems []bool
-}
-
-func (ks *KnapsackSolution) sumWeights() int {
-	sum := 0
-	for i, w := range ks.kp.weights {
-		if ks.takenItems[i] {
-			sum += w
-		}
-	}
-	return sum
-}
-
-func (ks *KnapsackSolution) sumValues() int {
-	sum := 0
-	for i, v := range ks.kp.values {
-		if ks.takenItems[i] {
-			sum += v
-		}
-	}
-	return sum
+type KnapsackSolver interface {
+	Solve()
 }
 
 func generateKnapsack(itemCount int) *KnapsackProblem {
@@ -48,6 +27,7 @@ func generateKnapsack(itemCount int) *KnapsackProblem {
 }
 
 func main() {
+	// Problem init
 	if len(os.Args) < 1 {
 		fmt.Println("Need item count as argument")
 		return
@@ -62,4 +42,16 @@ func main() {
 
 	k := generateKnapsack(int(itemCount))
 	fmt.Println(*k)
+
+	// Solver init
+	takenBestItems := make([]bool, itemCount)
+	takenCurrItems := make([]bool, itemCount)
+	initBest := KnapsackSolution{takenItems: takenBestItems}
+	initCurr := KnapsackSolution{takenItems: takenCurrItems}
+	//fmt.Println(&initBest)
+	//fmt.Println(&initCurr)
+	bfSolver := BFSolver{best: &initBest, current: &initCurr, kp: k}
+	fmt.Println(bfSolver)
+	bfSolver.Solve()
+	fmt.Println(bfSolver.best.SumValues(k), ":", bfSolver.best)
 }
