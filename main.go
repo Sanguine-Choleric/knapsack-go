@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
+	"time"
 )
 
 type KnapsackSolver interface {
@@ -28,7 +29,7 @@ func generateKnapsack(itemCount int) *KnapsackProblem {
 
 func main() {
 	// Problem init
-	if len(os.Args) < 1 {
+	if len(os.Args) < 2 {
 		fmt.Println("Need item count as argument")
 		return
 	}
@@ -41,7 +42,7 @@ func main() {
 	}
 
 	k := generateKnapsack(int(itemCount))
-	fmt.Println(*k)
+	// fmt.Println(*k)
 
 	// Solver init
 	takenBestItems := make([]bool, itemCount)
@@ -50,8 +51,32 @@ func main() {
 	initCurr := KnapsackSolution{takenItems: takenCurrItems}
 	//fmt.Println(&initBest)
 	//fmt.Println(&initCurr)
+
+	// Brute-Force
 	bfSolver := BFSolver{best: &initBest, current: &initCurr, kp: k}
-	fmt.Println(bfSolver)
+	// fmt.Println(bfSolver)
+
+	start := time.Now()
 	bfSolver.Solve()
-	fmt.Println(bfSolver.best.SumValues(k), ":", bfSolver.best)
+	bfTime := time.Since(start)
+	fmt.Println("BFS took", bfTime,
+		"| optimal solution is value", bfSolver.best.SumValues(k), "at weight", bfSolver.best.SumWeights(k))
+	// fmt.Println(bfSolver.best.SumWeights(k), ":", bfSolver.best.SumValues(k), ":", bfSolver.best)
+
+
+	// Backtracking
+	takenBestItems = make([]bool, itemCount)
+	takenCurrItems = make([]bool, itemCount)
+	initBest = KnapsackSolution{takenItems: takenBestItems}
+	initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	btSolver := BTSolver{best: &initBest, current: &initCurr, kp: k}
+
+	start = time.Now()
+	btSolver.Solve()
+	btTime := time.Since(start)
+	fmt.Println("BT took", btTime,
+		"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
+
+	// Speedup calcs
+	fmt.Println("BF vs BT:", (float32(bfTime) - float32(btTime)) / float32(btTime) * 100, "%")
 }
