@@ -54,44 +54,60 @@ func main() {
 	//fmt.Println(&initBest)
 	//fmt.Println(&initCurr)
 
-	// Brute-Force
-	bfSolver := BFSolver{best: &initBest, current: &initCurr, kp: k}
-	// fmt.Println(bfSolver)
+	// // Brute-Force
+	// bfSolver := BFSolver{best: &initBest, current: &initCurr, kp: k}
+	// // fmt.Println(bfSolver)
 
 	start := time.Now()
-	bfSolver.Solve()
-	bfTime := time.Since(start)
-	fmt.Println("BFS took", bfTime,
-		"| optimal solution is value", bfSolver.best.SumValues(k), "at weight", bfSolver.best.SumWeights(k))
-	// fmt.Println(bfSolver.best.SumWeights(k), ":", bfSolver.best.SumValues(k), ":", bfSolver.best)
+	// bfSolver.Solve()
+	// bfTime := time.Since(start)
+	// fmt.Println("BFS took", bfTime,
+	// 	"| optimal solution is value", bfSolver.best.SumValues(k), "at weight", bfSolver.best.SumWeights(k))
+	// // fmt.Println(bfSolver.best.SumWeights(k), ":", bfSolver.best.SumValues(k), ":", bfSolver.best)
 
-	// Backtracking
-	takenBestItems = make([]bool, itemCount)
-	takenCurrItems = make([]bool, itemCount)
-	initBest = KnapsackSolution{takenItems: takenBestItems}
-	initCurr = KnapsackSolution{takenItems: takenCurrItems}
-	btSolver := BTSolver{best: &initBest, current: &initCurr, kp: k}
+	// // Backtracking
+	// takenBestItems = make([]bool, itemCount)
+	// takenCurrItems = make([]bool, itemCount)
+	// initBest = KnapsackSolution{takenItems: takenBestItems}
+	// initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	// btSolver := BTSolver{best: &initBest, current: &initCurr, kp: k}
 
-	start = time.Now()
-	btSolver.Solve()
-	btTime := time.Since(start)
-	fmt.Println("BT took", btTime,
-		"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
+	// start = time.Now()
+	// btSolver.Solve()
+	// btTime := time.Since(start)
+	// fmt.Println("BT took", btTime,
+	// 	"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
 
 	// BNB UB1
 	takenBestItems = make([]bool, itemCount)
 	takenCurrItems = make([]bool, itemCount)
 	initBest = KnapsackSolution{takenItems: takenBestItems}
 	initCurr = KnapsackSolution{takenItems: takenCurrItems}
-	bnbSolver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
+	bnb1Solver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
 
 	start = time.Now()
-	bnbSolver.Solve()
-	bnbTime := time.Since(start)
-	fmt.Println("BNB UB1 took", bnbTime,
-		"| optimal solution is value", bnbSolver.best.SumValues(k), "at weight", bnbSolver.best.SumWeights(k))
+	bnb1Solver.Solve()
+	bnb1Time := time.Since(start)
+	fmt.Println("BNB UB1 took", bnb1Time,
+		"| optimal solution is value", bnb1Solver.best.SumValues(k), "at weight", bnb1Solver.best.SumWeights(k))
+
+
+
+	// BNB UB2
+	takenBestItems = make([]bool, itemCount)
+	takenCurrItems = make([]bool, itemCount)
+	initBest = KnapsackSolution{takenItems: takenBestItems}
+	initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	bnb2Solver := BNBub2Solver{best: &initBest, current: &initCurr, kp: k}
+
+	start = time.Now()
+	bnb2Solver.Solve()
+	bnb2Time := time.Since(start)
+	fmt.Println("BNB UB2 took", bnb2Time,
+		"| optimal solution is value", bnb2Solver.best.SumValues(k), "at weight", bnb2Solver.best.SumWeights(k))
+
 
 	// Speedup calcs
-	fmt.Println("BF vs BT:", (float32(bfTime) - float32(btTime)) / float32(btTime) * 100, "%")
-	fmt.Println("BF vs BNB:", (float32(bfTime) - float32(bnbTime)) / float32(bnbTime) * 100, "%")
+	// fmt.Println("BF vs BT:", (float32(bfTime) - float32(btTime)) / float32(btTime) * 100, "%")
+	// fmt.Println("BF vs BNB:", (float32(bfTime) - float32(bnbTime)) / float32(bnbTime) * 100, "%")
 }

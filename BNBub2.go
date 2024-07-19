@@ -35,7 +35,8 @@ func (bnb *BNBub2Solver) FindSolution(itemNum int) {
 	}
 
 	// BNB case
-	if (bnb.kp.totalValue() - bnb.current.SumValues(bnb.kp)) <= bnb.best.SumValues(bnb.kp) {
+	upperBound := bnb.calcUB(itemNum)
+	if upperBound <= bnb.best.SumValues(bnb.kp) {
 		return
 	}
 
@@ -51,8 +52,34 @@ func (bnb *BNBub2Solver) FindSolution(itemNum int) {
 	bnb.UndoDontTake(itemNum)
 }
 
-func (bnb *BNBub2Solver) calcUB() int {
-	return 0
+func (bnb *BNBub2Solver) calcUB(itemNum int) int {
+	// Sum taken + sum undecided that fit in remaining capacity
+	// Taken: bnb.sumTaken
+	// Untaken: bnb.sumUnTaken
+	// Undecided: bnb.kp.totalValue - taken - untaken
+
+	// UB1
+	// return bnb.sumTaken + (bnb.kp.totalValue() - bnb.sumTaken - bnb.sumUnTaken)
+
+	// Undecided that fit
+	remainingCapacity := bnb.kp.capacity - bnb.current.SumWeights(bnb.kp)
+	// for i := itemNum; i < len(bnb.kp.values); i++ {
+	// 	fmt.Printf("%2d ", bnb.kp.values[i])
+	// }
+	// fmt.Println()
+	// for i := itemNum; i < len(bnb.kp.values); i++ {
+	// 	fmt.Printf("%2d ", bnb.kp.weights[i])
+	// }
+	// fmt.Println()
+	// fmt.Println()
+	sumUndecidedFit := 0
+	for i := itemNum; i < len(bnb.kp.values); i++ {
+		if !bnb.current.takenItems[i] && (bnb.kp.weights[i] < remainingCapacity) {
+			sumUndecidedFit += bnb.kp.values[i]
+		}
+	}
+	
+	return sumUndecidedFit + bnb.sumTaken
 }
 
 func (bnb *BNBub2Solver) Take(itemNum int) {
