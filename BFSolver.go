@@ -25,7 +25,6 @@ func (bf *BFSolver) FindSolution(itemNum int) {
 		}
 		return
 	}
-	
 	// Take item
 	//fmt.Println("Taking", itemNum)
 	bf.current.Take(itemNum)

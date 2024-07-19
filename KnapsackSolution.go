@@ -9,8 +9,16 @@ func (ks *KnapsackSolution) DontTake(itemNum int) {
 	ks.takenItems[itemNum] = false
 }
 
+func (ks *KnapsackSolution) UndoDontTake(itemNum int) {
+	// TODO
+}
+
 func (ks *KnapsackSolution) Take(itemNum int) {
 	ks.takenItems[itemNum] = true
+}
+
+func (ks *KnapsackSolution) UndoTake(itemNum int) {
+	ks.takenItems[itemNum] = false
 }
 
 func (ks *KnapsackSolution) SumWeights(kp *KnapsackProblem) int {

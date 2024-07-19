@@ -15,7 +15,7 @@ func (bt *BTSolver) FindSolution(itemNum int) {
 
 	currentWeight := bt.current.SumWeights(bt.kp)
 	if currentWeight > bt.kp.capacity {
-		bt.current.DontTake(itemNum - 1)
+		// bt.current.DontTake(itemNum - 1)
 		return
 	}
 
@@ -36,9 +36,10 @@ func (bt *BTSolver) FindSolution(itemNum int) {
 	//fmt.Println("Taking", itemNum)
 	bt.current.Take(itemNum)
 	bt.FindSolution(itemNum + 1)
+	bt.current.UndoTake(itemNum)
 	// No take item
 	//fmt.Println("Not Taking", itemNum)
 	bt.current.DontTake(itemNum)
 	bt.FindSolution(itemNum + 1)
-	
+	bt.current.UndoDontTake(itemNum)
 }

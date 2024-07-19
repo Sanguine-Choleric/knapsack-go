@@ -24,7 +24,7 @@ func generateKnapsack(itemCount int) *KnapsackProblem {
 		sumWeights += w
 	}
 
-	return &KnapsackProblem{capacity: sumWeights / 2, weights: weights, values: values}
+	return &KnapsackProblem{capacity: (sumWeights / 2), weights: weights, values: values}
 }
 
 func main() {
@@ -42,7 +42,9 @@ func main() {
 	}
 
 	k := generateKnapsack(int(itemCount))
-	// fmt.Println(*k)
+	fmt.Println("Cap: ", k.capacity)
+	fmt.Println("Values", k.values)
+	fmt.Println("Weight", k.weights)
 
 	// Solver init
 	takenBestItems := make([]bool, itemCount)
