@@ -65,7 +65,6 @@ func main() {
 		"| optimal solution is value", bfSolver.best.SumValues(k), "at weight", bfSolver.best.SumWeights(k))
 	// fmt.Println(bfSolver.best.SumWeights(k), ":", bfSolver.best.SumValues(k), ":", bfSolver.best)
 
-
 	// Backtracking
 	takenBestItems = make([]bool, itemCount)
 	takenCurrItems = make([]bool, itemCount)
@@ -79,6 +78,20 @@ func main() {
 	fmt.Println("BT took", btTime,
 		"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
 
+	// BNB UB1
+	takenBestItems = make([]bool, itemCount)
+	takenCurrItems = make([]bool, itemCount)
+	initBest = KnapsackSolution{takenItems: takenBestItems}
+	initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	bnbSolver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
+
+	start = time.Now()
+	bnbSolver.Solve()
+	bnbTime := time.Since(start)
+	fmt.Println("BNB UB1 took", bnbTime,
+		"| optimal solution is value", bnbSolver.best.SumValues(k), "at weight", bnbSolver.best.SumWeights(k))
+
 	// Speedup calcs
 	fmt.Println("BF vs BT:", (float32(bfTime) - float32(btTime)) / float32(btTime) * 100, "%")
+	fmt.Println("BF vs BNB:", (float32(bfTime) - float32(bnbTime)) / float32(bnbTime) * 100, "%")
 }
