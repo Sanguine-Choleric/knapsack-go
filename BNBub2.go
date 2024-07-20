@@ -35,7 +35,7 @@ func (bnb *BNBub2Solver) FindSolution(itemNum int) {
 	}
 
 	// BNB case
-	upperBound := bnb.calcUB(itemNum)
+	upperBound := bnb.calculateUB(itemNum)
 	if upperBound <= bnb.best.SumValues(bnb.kp) {
 		return
 	}
@@ -52,14 +52,11 @@ func (bnb *BNBub2Solver) FindSolution(itemNum int) {
 	bnb.UndoDontTake(itemNum)
 }
 
-func (bnb *BNBub2Solver) calcUB(itemNum int) int {
+func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 	// Sum taken + sum undecided that fit in remaining capacity
 	// Taken: bnb.sumTaken
 	// Untaken: bnb.sumUnTaken
 	// Undecided: bnb.kp.totalValue - taken - untaken
-
-	// UB1
-	// return bnb.sumTaken + (bnb.kp.totalValue() - bnb.sumTaken - bnb.sumUnTaken)
 
 	// Undecided that fit
 	remainingCapacity := bnb.kp.capacity - bnb.current.SumWeights(bnb.kp)
