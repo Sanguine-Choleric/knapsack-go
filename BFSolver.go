@@ -11,7 +11,7 @@ func (bf *BFSolver) Solve() {
 }
 
 func (bf *BFSolver) FindSolution(itemNum int) {
-	itemCount := len(bf.kp.weights)
+	itemCount := len(bf.kp.items)
 
 	// Base Case
 	if itemNum == itemCount {

@@ -13,7 +13,7 @@ func (bnb *BNBub2Solver) Solve() {
 }
 
 func (bnb *BNBub2Solver) FindSolution(itemNum int) {
-	itemCount := len(bnb.kp.weights)
+	itemCount := len(bnb.kp.items)
 
 	currentWeight := bnb.current.SumWeights(bnb.kp)
 	if currentWeight > bnb.kp.capacity {
@@ -70,9 +70,9 @@ func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 	// fmt.Println()
 	// fmt.Println()
 	sumUndecidedFit := 0
-	for i := itemNum; i < len(bnb.kp.values); i++ {
-		if !bnb.current.takenItems[i] && (bnb.kp.weights[i] < remainingCapacity) {
-			sumUndecidedFit += bnb.kp.values[i]
+	for i := itemNum; i < len(bnb.kp.items); i++ {
+		if !bnb.current.takenItems[i] && (bnb.kp.items[i].weight < remainingCapacity) {
+			sumUndecidedFit += bnb.kp.items[i].value
 		}
 	}
 	
@@ -81,19 +81,19 @@ func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 
 func (bnb *BNBub2Solver) Take(itemNum int) {
 	bnb.current.takenItems[itemNum] = true
-	bnb.sumTaken += bnb.kp.values[itemNum]
+	bnb.sumTaken += bnb.kp.items[itemNum].value
 }
 
 func (bnb *BNBub2Solver) UndoTake(itemNum int) {
 	bnb.current.takenItems[itemNum] = false
-	bnb.sumTaken -= bnb.kp.values[itemNum]
+	bnb.sumTaken -= bnb.kp.items[itemNum].value
 }
 
 func (bnb *BNBub2Solver) DontTake(itemNum int) {
 	bnb.current.takenItems[itemNum] = false
-	bnb.sumUnTaken += bnb.kp.values[itemNum]
+	bnb.sumUnTaken += bnb.kp.items[itemNum].value
 }
 
 func (bnb *BNBub2Solver) UndoDontTake(itemNum int) {
-	bnb.sumUnTaken -= bnb.kp.values[itemNum]
+	bnb.sumUnTaken -= bnb.kp.items[itemNum].value
 }

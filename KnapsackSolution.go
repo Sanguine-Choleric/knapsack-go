@@ -23,18 +23,18 @@ func (ks *KnapsackSolution) UndoTake(itemNum int) {
 
 func (ks *KnapsackSolution) SumWeights(kp *KnapsackProblem) int {
 	sum := 0
-	for i, w := range kp.weights {
+	for i, w := range kp.items {
 		if ks.takenItems[i] {
-			sum += w
+			sum += w.weight
 		}
 	}
 	return sum
 }
 func (ks *KnapsackSolution) SumValues(kp *KnapsackProblem) int {
 	sum := 0
-	for i, v := range kp.values {
+	for i, v := range kp.items {
 		if ks.takenItems[i] {
-			sum += v
+			sum += v.value
 		}
 	}
 	return sum

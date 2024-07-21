@@ -11,7 +11,7 @@ func (bt *BTSolver) Solve() {
 }
 
 func (bt *BTSolver) FindSolution(itemNum int) {
-	itemCount := len(bt.kp.weights)
+	itemCount := len(bt.kp.items)
 
 	currentWeight := bt.current.SumWeights(bt.kp)
 	if currentWeight > bt.kp.capacity {

@@ -13,18 +13,34 @@ type KnapsackSolver interface {
 }
 
 func generateKnapsack(itemCount int) *KnapsackProblem {
-	var weights []int
-	var values []int
-	for i := 0; i < itemCount; i++ {
-		weights = append(weights, rand.Intn(100)+1)
-		values = append(values, rand.Intn(100)+1)
-	}
-	sumWeights := 0
-	for _, w := range weights {
-		sumWeights += w
-	}
+	// var weights []int
+	// var values []int
+	// for i := 0; i < itemCount; i++ {
+	// 	weights = append(weights, rand.Intn(100)+1)
+	// 	values = append(values, rand.Intn(100)+1)
+	// }
+	// sumWeights := 0
+	// for _, w := range weights {
+	// 	sumWeights += w
+	// }
 
-	return &KnapsackProblem{capacity: (sumWeights / 2), weights: weights, values: values}
+	// return &KnapsackProblem{capacity: (sumWeights / 2), weights: weights, values: values}
+	items := make([]Item, itemCount)
+	sumWeights := 0
+	for i := 0; i < itemCount; i++ {
+		items[i] = Item{value: rand.Intn(100) + 1, weight: rand.Intn(100) + 1}
+		sumWeights += items[i].weight
+	}
+	return &KnapsackProblem{capacity: (sumWeights / 2), items: items}
+}
+
+func generateTestKnapsack() *KnapsackProblem {
+	// return &KnapsackProblem{capacity: 69, values: []int{47, 61, 95}, weights: []int{57, 37, 49}}
+	return &KnapsackProblem{capacity: 69, items: []Item{
+		{value: 47, weight: 57}, 
+		{value: 61, weight: 37}, 
+		{value: 95, weight: 49},
+	}}
 }
 
 func main() {
@@ -42,9 +58,9 @@ func main() {
 	}
 
 	k := generateKnapsack(int(itemCount))
+	// k := generateTestKnapsack()
 	fmt.Println("Cap: ", k.capacity)
-	fmt.Println("Values", k.values)
-	fmt.Println("Weight", k.weights)
+	fmt.Println("Items", k.items)
 
 	// Solver init
 	takenBestItems := make([]bool, itemCount)
@@ -55,41 +71,41 @@ func main() {
 	//fmt.Println(&initCurr)
 
 	// Brute-Force
-	// bfSolver := BFSolver{best: &initBest, current: &initCurr, kp: k}
+	bfSolver := BFSolver{best: &initBest, current: &initCurr, kp: k}
 	// fmt.Println(bfSolver)
 
 	start := time.Now()
-	// bfSolver.Solve()
-	// bfTime := time.Since(start)
-	// fmt.Println("BFS took", bfTime,
-	// 	"| optimal solution is value", bfSolver.best.SumValues(k), "at weight", bfSolver.best.SumWeights(k))
+	bfSolver.Solve()
+	bfTime := time.Since(start)
+	fmt.Println("BFS took", bfTime,
+		"| optimal solution is value", bfSolver.best.SumValues(k), "at weight", bfSolver.best.SumWeights(k))
 	// fmt.Println(bfSolver.best.SumWeights(k), ":", bfSolver.best.SumValues(k), ":", bfSolver.best)
 
 	// Backtracking
-	// takenBestItems = make([]bool, itemCount)
-	// takenCurrItems = make([]bool, itemCount)
-	// initBest = KnapsackSolution{takenItems: takenBestItems}
-	// initCurr = KnapsackSolution{takenItems: takenCurrItems}
-	// btSolver := BTSolver{best: &initBest, current: &initCurr, kp: k}
+	takenBestItems = make([]bool, itemCount)
+	takenCurrItems = make([]bool, itemCount)
+	initBest = KnapsackSolution{takenItems: takenBestItems}
+	initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	btSolver := BTSolver{best: &initBest, current: &initCurr, kp: k}
 
-	// start = time.Now()
-	// btSolver.Solve()
-	// btTime := time.Since(start)
-	// fmt.Println("BT took", btTime,
-	// 	"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
+	start = time.Now()
+	btSolver.Solve()
+	btTime := time.Since(start)
+	fmt.Println("BT took", btTime,
+		"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
 
-	// // BNB UB1
-	// takenBestItems = make([]bool, itemCount)
-	// takenCurrItems = make([]bool, itemCount)
-	// initBest = KnapsackSolution{takenItems: takenBestItems}
-	// initCurr = KnapsackSolution{takenItems: takenCurrItems}
-	// bnb1Solver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
+	// BNB UB1
+	takenBestItems = make([]bool, itemCount)
+	takenCurrItems = make([]bool, itemCount)
+	initBest = KnapsackSolution{takenItems: takenBestItems}
+	initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	bnb1Solver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
 
-	// start = time.Now()
-	// bnb1Solver.Solve()
-	// bnb1Time := time.Since(start)
-	// fmt.Println("BNB UB1 took", bnb1Time,
-	// 	"| optimal solution is value", bnb1Solver.best.SumValues(k), "at weight", bnb1Solver.best.SumWeights(k))
+	start = time.Now()
+	bnb1Solver.Solve()
+	bnb1Time := time.Since(start)
+	fmt.Println("BNB UB1 took", bnb1Time,
+		"| optimal solution is value", bnb1Solver.best.SumValues(k), "at weight", bnb1Solver.best.SumWeights(k))
 
 	// BNB UB2
 	takenBestItems = make([]bool, itemCount)
@@ -102,20 +118,22 @@ func main() {
 	bnb2Solver.Solve()
 	bnb2Time := time.Since(start)
 	fmt.Println("BNB UB2 took", bnb2Time,
-		"| optimal solution is value", bnb2Solver.best.SumValues(k), "at weight", bnb2Solver.best.SumWeights(k))
+		"| optimal solution is value", bnb2Solver.best.SumValues(k), "at weight", bnb2Solver.best.SumWeights(k),
+		"picking items", bnb2Solver.best.takenItems)
 
 	// BNB UB3 - o(n)
-	takenBestItems = make([]bool, itemCount)
-	takenCurrItems = make([]bool, itemCount)
-	initBest = KnapsackSolution{takenItems: takenBestItems}
-	initCurr = KnapsackSolution{takenItems: takenCurrItems}
-	bnb3Solver := BNBub3Solver{best: &initBest, current: &initCurr, kp: k}
-	
-	start = time.Now()
-	bnb3Solver.Solve()
-	bnb3Time := time.Since(start)
-	fmt.Println("BNB UB3 took", bnb3Time,
-		"| optimal solution is value", bnb3Solver.best.SumValues(k), "at weight", bnb3Solver.best.SumWeights(k))
+	// takenBestItems = make([]bool, itemCount)
+	// takenCurrItems = make([]bool, itemCount)
+	// initBest = KnapsackSolution{takenItems: takenBestItems}
+	// initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	// bnb3Solver := BNBub3Solver{best: &initBest, current: &initCurr, kp: k}
+
+	// start = time.Now()
+	// bnb3Solver.Solve()
+	// bnb3Time := time.Since(start)
+	// fmt.Println("BNB UB3 took", bnb3Time,
+	// 	"| optimal solution is value", bnb3Solver.best.SumValues(k), "at weight", bnb3Solver.best.SumWeights(k),
+	// 	"picking items", bnb3Solver.best.takenItems)
 
 	// Speedup calcs
 	// fmt.Println("BF vs BT:\t", (float32(bfTime)-float32(btTime))/float32(btTime)*100, "%")
