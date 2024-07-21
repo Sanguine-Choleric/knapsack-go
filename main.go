@@ -36,10 +36,10 @@ func generateKnapsack(itemCount int) *KnapsackProblem {
 
 func generateTestKnapsack() *KnapsackProblem {
 	// return &KnapsackProblem{capacity: 69, values: []int{47, 61, 95}, weights: []int{57, 37, 49}}
-	return &KnapsackProblem{capacity: 69, items: []Item{
-		{value: 47, weight: 57}, 
-		{value: 61, weight: 37}, 
-		{value: 95, weight: 49},
+	return &KnapsackProblem{capacity: 41, items: []Item{
+		{value: 43, weight: 21}, 
+		{value: 19, weight: 32}, 
+		{value: 60, weight: 29},
 	}}
 }
 
@@ -95,18 +95,18 @@ func main() {
 	// fmt.Println("BT took", btTime,
 	// 	"| optimal solution is value", btSolver.best.SumValues(k), "at weight", btSolver.best.SumWeights(k))
 
-	// // BNB UB1
-	// takenBestItems = make([]bool, itemCount)
-	// takenCurrItems = make([]bool, itemCount)
-	// initBest = KnapsackSolution{takenItems: takenBestItems}
-	// initCurr = KnapsackSolution{takenItems: takenCurrItems}
-	// bnb1Solver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
+	// BNB UB1
+	takenBestItems = make([]bool, itemCount)
+	takenCurrItems = make([]bool, itemCount)
+	initBest = KnapsackSolution{takenItems: takenBestItems}
+	initCurr = KnapsackSolution{takenItems: takenCurrItems}
+	bnb1Solver := BNBub1Solver{best: &initBest, current: &initCurr, kp: k}
 
-	// start = time.Now()
-	// bnb1Solver.Solve()
-	// bnb1Time := time.Since(start)
-	// fmt.Println("BNB UB1 took", bnb1Time,
-	// 	"| optimal solution is value", bnb1Solver.best.SumValues(k), "at weight", bnb1Solver.best.SumWeights(k))
+	start = time.Now()
+	bnb1Solver.Solve()
+	bnb1Time := time.Since(start)
+	fmt.Println("BNB UB1 took", bnb1Time,
+		"| value =", bnb1Solver.best.SumValues(k), "weight =", bnb1Solver.best.SumWeights(k))
 
 	// BNB UB2
 	takenBestItems = make([]bool, itemCount)
@@ -119,8 +119,7 @@ func main() {
 	bnb2Solver.Solve()
 	bnb2Time := time.Since(start)
 	fmt.Println("BNB UB2 took", bnb2Time,
-		"| value =", bnb2Solver.best.SumValues(k), "weight =", bnb2Solver.best.SumWeights(k),
-		"items", bnb2Solver.best.takenItems)
+		"| value =", bnb2Solver.best.SumValues(k), "weight =", bnb2Solver.best.SumWeights(k))
 	fmt.Println()
 
 	// BNB UB3 - o(n)
@@ -134,8 +133,7 @@ func main() {
 	bnb3Solver.Solve()
 	bnb3Time := time.Since(start)
 	fmt.Println("BNB UB3 took", bnb3Time,
-		"| value =", bnb3Solver.best.SumValues(k), "weight =", bnb3Solver.best.SumWeights(k),
-		"items", bnb3Solver.best.takenItems)
+		"| value =", bnb3Solver.best.SumValues(k), "weight =", bnb3Solver.best.SumWeights(k))
 
 	// Speedup calcs
 	// fmt.Println("BF vs BT:\t", (float32(bfTime)-float32(btTime))/float32(btTime)*100, "%")
