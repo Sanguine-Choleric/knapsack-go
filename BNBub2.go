@@ -71,7 +71,7 @@ func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 	// fmt.Println()
 	sumUndecidedFit := 0
 	for i := itemNum; i < len(bnb.kp.items); i++ {
-		if !bnb.current.takenItems[i] && (bnb.kp.items[i].weight < remainingCapacity) {
+		if !bnb.current.takenItems[i] && (bnb.kp.items[i].weight <= remainingCapacity) {
 			sumUndecidedFit += bnb.kp.items[i].value
 		}
 	}
