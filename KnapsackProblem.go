@@ -4,7 +4,7 @@ type KnapsackProblem struct {
 	capacity int
 	// weights  []int
 	// values   []int
-	items    []Item
+	items []Item
 }
 
 type Item struct {

@@ -75,7 +75,7 @@ func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 			sumUndecidedFit += bnb.kp.items[i].value
 		}
 	}
-	
+
 	return sumUndecidedFit + bnb.sumTaken
 }
 

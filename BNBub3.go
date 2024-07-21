@@ -70,7 +70,7 @@ func (bnb *BNBub3Solver) FindSolution(itemNum int) {
 
 	// BNB case
 	upperBound := bnb.calculateUB(itemNum)
-	if upperBound + bnb.sumTakenV <= bnb.best.SumValues(bnb.kp) {
+	if upperBound+bnb.sumTakenV <= bnb.best.SumValues(bnb.kp) {
 		return
 	}
 
@@ -88,7 +88,7 @@ func (bnb *BNBub3Solver) FindSolution(itemNum int) {
 
 func (bnb *BNBub3Solver) calculateUB(itemNum int) int {
 	// Fractional Knapsack solution
-	
+
 	return bnb.FractionalKnapsack(itemNum)
 }
 
@@ -150,7 +150,7 @@ func (bnb *BNBub3Solver) Take(itemNum int) {
 }
 
 func (bnb *BNBub3Solver) UndoTake(itemNum int) {
-	// bnb.current.takenItems[itemNum] = false
+	bnb.current.takenItems[itemNum] = false
 	bnb.sumTakenV -= bnb.kp.items[itemNum].value
 	bnb.sumTakenW -= bnb.kp.items[itemNum].weight
 }

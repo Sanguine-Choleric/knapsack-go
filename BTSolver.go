@@ -1,9 +1,9 @@
 package main
 
 type BTSolver struct {
-	best *KnapsackSolution
+	best    *KnapsackSolution
 	current *KnapsackSolution
-	kp *KnapsackProblem
+	kp      *KnapsackProblem
 }
 
 func (bt *BTSolver) Solve() {
@@ -31,7 +31,7 @@ func (bt *BTSolver) FindSolution(itemNum int) {
 		}
 		return
 	}
-	
+
 	// Take item
 	//fmt.Println("Taking", itemNum)
 	bt.current.Take(itemNum)

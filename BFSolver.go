@@ -33,5 +33,4 @@ func (bf *BFSolver) FindSolution(itemNum int) {
 	//fmt.Println("Not Taking", itemNum)
 	bf.current.DontTake(itemNum)
 	bf.FindSolution(itemNum + 1)
-	
 }
