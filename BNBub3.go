@@ -15,21 +15,21 @@ type BNBub3Solver struct {
 }
 
 func (bnb *BNBub3Solver) Solve() {
-	// bnb.FindInitialBest()
 	sort.Slice(bnb.kp.items, func(i, j int) bool {
 		iFractionalVal := float64(bnb.kp.items[i].value) / float64(bnb.kp.items[i].weight)
 		jFractionalVal := float64(bnb.kp.items[j].value) / float64(bnb.kp.items[j].weight)
 		return iFractionalVal > jFractionalVal
 	})
+	// bnb.FindInitialBest()
 	bnb.FindSolution(0)
 }
 
 func (bnb *BNBub3Solver) FindInitialBest() {
-	sort.Slice(bnb.kp.items, func(i, j int) bool {
-		iFractionalVal := float64(bnb.kp.items[i].value) / float64(bnb.kp.items[i].weight)
-		jFractionalVal := float64(bnb.kp.items[j].value) / float64(bnb.kp.items[j].weight)
-		return iFractionalVal > jFractionalVal
-	})
+	// sort.Slice(bnb.kp.items, func(i, j int) bool {
+	// 	iFractionalVal := float64(bnb.kp.items[i].value) / float64(bnb.kp.items[i].weight)
+	// 	jFractionalVal := float64(bnb.kp.items[j].value) / float64(bnb.kp.items[j].weight)
+	// 	return iFractionalVal > jFractionalVal
+	// })
 	fmt.Println(bnb.kp.items)
 
 	initialBest := bnb.InitialFractionalKnapsack()
