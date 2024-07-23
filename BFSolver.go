@@ -1,9 +1,10 @@
 package main
 
 type BFSolver struct {
-	best    *KnapsackSolution
-	current *KnapsackSolution
-	kp      *KnapsackProblem
+	best          *KnapsackSolution
+	current       *KnapsackSolution
+	kp            *KnapsackProblem
+	nodesExplored int
 }
 
 func (bf *BFSolver) Solve() {
@@ -27,10 +28,20 @@ func (bf *BFSolver) FindSolution(itemNum int) {
 	}
 	// Take item
 	//fmt.Println("Taking", itemNum)
-	bf.current.Take(itemNum)
+	bf.Take(itemNum)
 	bf.FindSolution(itemNum + 1)
 	// No take item
 	//fmt.Println("Not Taking", itemNum)
-	bf.current.DontTake(itemNum)
+	bf.DontTake(itemNum)
 	bf.FindSolution(itemNum + 1)
+}
+
+func (bf *BFSolver) Take(itemNum int) {
+	bf.current.takenItems[itemNum] = true
+	bf.nodesExplored++
+}
+
+func (bf *BFSolver) DontTake(itemNum int) {
+	bf.current.takenItems[itemNum] = false
+	bf.nodesExplored++
 }

@@ -6,12 +6,13 @@ import (
 )
 
 type BNBub3Solver struct {
-	best        *KnapsackSolution
-	current     *KnapsackSolution
-	kp          *KnapsackProblem
-	sumTakenV   int
-	sumUntakenV int
-	sumTakenW   int
+	best          *KnapsackSolution
+	current       *KnapsackSolution
+	kp            *KnapsackProblem
+	sumTakenV     int
+	sumUntakenV   int
+	sumTakenW     int
+	nodesExplored int
 }
 
 func (bnb *BNBub3Solver) Solve() {
@@ -43,7 +44,7 @@ func (bnb *BNBub3Solver) FindInitialBest() {
 		sum += bnb.kp.items[i].value
 		i += 1
 	}
-	// fmt.Println(bnb.best.takenItems)
+	fmt.Println(bnb.best.takenItems, bnb.best.SumValues(bnb.kp))
 }
 
 func (bnb *BNBub3Solver) FindSolution(itemNum int) {
@@ -147,6 +148,7 @@ func (bnb *BNBub3Solver) Take(itemNum int) {
 	bnb.current.takenItems[itemNum] = true
 	bnb.sumTakenV += bnb.kp.items[itemNum].value
 	bnb.sumTakenW += bnb.kp.items[itemNum].weight
+	bnb.nodesExplored++
 }
 
 func (bnb *BNBub3Solver) UndoTake(itemNum int) {
@@ -158,6 +160,7 @@ func (bnb *BNBub3Solver) UndoTake(itemNum int) {
 func (bnb *BNBub3Solver) DontTake(itemNum int) {
 	bnb.current.takenItems[itemNum] = false
 	bnb.sumUntakenV += bnb.kp.items[itemNum].value
+	bnb.nodesExplored++
 }
 
 func (bnb *BNBub3Solver) UndoDontTake(itemNum int) {

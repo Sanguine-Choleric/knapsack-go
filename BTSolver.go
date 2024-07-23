@@ -1,10 +1,11 @@
 package main
 
 type BTSolver struct {
-	best    *KnapsackSolution
-	current *KnapsackSolution
-	kp      *KnapsackProblem
-	takenW  int
+	best          *KnapsackSolution
+	current       *KnapsackSolution
+	kp            *KnapsackProblem
+	takenW        int
+	nodesExplored int
 }
 
 func (bt *BTSolver) Solve() {
@@ -48,6 +49,7 @@ func (bt *BTSolver) FindSolution(itemNum int) {
 func (bt *BTSolver) Take(itemNum int) {
 	bt.current.takenItems[itemNum] = true
 	bt.takenW += bt.kp.items[itemNum].weight
+	bt.nodesExplored++
 }
 
 func (bt *BTSolver) UndoTake(itemNum int) {
@@ -57,6 +59,7 @@ func (bt *BTSolver) UndoTake(itemNum int) {
 
 func (bt *BTSolver) DontTake(itemNum int) {
 	bt.current.takenItems[itemNum] = false
+	bt.nodesExplored++
 }
 
 func (bt *BTSolver) UndoDontTake(itemNum int) {

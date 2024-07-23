@@ -1,11 +1,12 @@
 package main
 
 type BNBub1Solver struct {
-	best       *KnapsackSolution
-	current    *KnapsackSolution
-	kp         *KnapsackProblem
-	sumTaken   int
-	sumUntaken int
+	best          *KnapsackSolution
+	current       *KnapsackSolution
+	kp            *KnapsackProblem
+	sumTaken      int
+	sumUntaken    int
+	nodesExplored int
 }
 
 func (bnb *BNBub1Solver) Solve() {
@@ -54,6 +55,7 @@ func (bnb *BNBub1Solver) FindSolution(itemNum int) {
 func (bnb *BNBub1Solver) Take(itemNum int) {
 	bnb.current.takenItems[itemNum] = true
 	bnb.sumTaken += bnb.kp.items[itemNum].value
+	bnb.nodesExplored++
 }
 
 func (bnb *BNBub1Solver) UndoTake(itemNum int) {
@@ -64,6 +66,7 @@ func (bnb *BNBub1Solver) UndoTake(itemNum int) {
 func (bnb *BNBub1Solver) DontTake(itemNum int) {
 	bnb.current.takenItems[itemNum] = false
 	bnb.sumUntaken += bnb.kp.items[itemNum].value
+	bnb.nodesExplored++
 }
 
 func (bnb *BNBub1Solver) UndoDontTake(itemNum int) {

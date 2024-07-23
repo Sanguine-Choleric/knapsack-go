@@ -1,11 +1,12 @@
 package main
 
 type BNBub2Solver struct {
-	best       *KnapsackSolution
-	current    *KnapsackSolution
-	kp         *KnapsackProblem
-	sumTaken   int
-	sumUnTaken int
+	best          *KnapsackSolution
+	current       *KnapsackSolution
+	kp            *KnapsackProblem
+	sumTaken      int
+	sumUnTaken    int
+	nodesExplored int
 }
 
 func (bnb *BNBub2Solver) Solve() {
@@ -60,15 +61,6 @@ func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 
 	// Undecided that fit
 	remainingCapacity := bnb.kp.capacity - bnb.current.SumWeights(bnb.kp)
-	// for i := itemNum; i < len(bnb.kp.values); i++ {
-	// 	fmt.Printf("%2d ", bnb.kp.values[i])
-	// }
-	// fmt.Println()
-	// for i := itemNum; i < len(bnb.kp.values); i++ {
-	// 	fmt.Printf("%2d ", bnb.kp.weights[i])
-	// }
-	// fmt.Println()
-	// fmt.Println()
 	sumUndecidedFit := 0
 	for i := itemNum; i < len(bnb.kp.items); i++ {
 		if !bnb.current.takenItems[i] && (bnb.kp.items[i].weight <= remainingCapacity) {
@@ -82,6 +74,7 @@ func (bnb *BNBub2Solver) calculateUB(itemNum int) int {
 func (bnb *BNBub2Solver) Take(itemNum int) {
 	bnb.current.takenItems[itemNum] = true
 	bnb.sumTaken += bnb.kp.items[itemNum].value
+	bnb.nodesExplored++
 }
 
 func (bnb *BNBub2Solver) UndoTake(itemNum int) {
@@ -92,6 +85,7 @@ func (bnb *BNBub2Solver) UndoTake(itemNum int) {
 func (bnb *BNBub2Solver) DontTake(itemNum int) {
 	bnb.current.takenItems[itemNum] = false
 	bnb.sumUnTaken += bnb.kp.items[itemNum].value
+	bnb.nodesExplored++
 }
 
 func (bnb *BNBub2Solver) UndoDontTake(itemNum int) {

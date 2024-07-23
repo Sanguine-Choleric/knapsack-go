@@ -81,8 +81,8 @@ func main() {
 	start = time.Now()
 	bfSolver.Solve()
 	bfTime := time.Since(start)
-	fmt.Println("BFS\t", bfTime,
-		"\t| value =", bfSolver.best.SumValues(k), "| weight =", bfSolver.best.SumWeights(k))
+	fmt.Println("BFS\t", fmt.Sprintf("%15s", bfTime),
+		"| value =", bfSolver.best.SumValues(k), "| weight =", bfSolver.best.SumWeights(k), "| nodes =", bfSolver.nodesExplored)
 	// fmt.Println(bfSolver.best.SumWeights(k), ":", bfSolver.best.SumValues(k), ":", bfSolver.best)
 
 	// Backtracking
@@ -95,8 +95,8 @@ func main() {
 	start = time.Now()
 	btSolver.Solve()
 	btTime := time.Since(start)
-	fmt.Println("BT\t", btTime,
-		"\t| value =", btSolver.best.SumValues(k), "| weight =", btSolver.best.SumWeights(k))
+	fmt.Println("BT\t", fmt.Sprintf("%15s", btTime),
+		"| value =", btSolver.best.SumValues(k), "| weight =", btSolver.best.SumWeights(k), "| nodes =", btSolver.nodesExplored)
 
 	// BNB UB1
 	takenBestItems = make([]bool, itemCount)
@@ -108,8 +108,8 @@ func main() {
 	start = time.Now()
 	bnb1Solver.Solve()
 	bnb1Time := time.Since(start)
-	fmt.Println("BNB UB1\t", bnb1Time,
-		"\t| value =", bnb1Solver.best.SumValues(k), "| weight =", bnb1Solver.best.SumWeights(k))
+	fmt.Println("BNB UB1\t", fmt.Sprintf("%15s", bnb1Time),
+		"| value =", bnb1Solver.best.SumValues(k), "| weight =", bnb1Solver.best.SumWeights(k), "| nodes =", bnb1Solver.nodesExplored)
 
 	// BNB UB2
 	takenBestItems = make([]bool, itemCount)
@@ -121,8 +121,8 @@ func main() {
 	start = time.Now()
 	bnb2Solver.Solve()
 	bnb2Time := time.Since(start)
-	fmt.Println("BNB UB2\t", bnb2Time,
-		"\t| value =", bnb2Solver.best.SumValues(k), "| weight =", bnb2Solver.best.SumWeights(k))
+	fmt.Println("BNB UB2\t", fmt.Sprintf("%15s", bnb2Time),
+		"| value =", bnb2Solver.best.SumValues(k), "| weight =", bnb2Solver.best.SumWeights(k), "| nodes =", bnb2Solver.nodesExplored)
 
 	// BNB UB3 - o(n)
 	takenBestItems = make([]bool, itemCount)
@@ -134,8 +134,8 @@ func main() {
 	start = time.Now()
 	bnb3Solver.Solve()
 	bnb3Time := time.Since(start)
-	fmt.Println("BNB UB3\t", bnb3Time,
-		"\t| value =", bnb3Solver.best.SumValues(k), "| weight =", bnb3Solver.best.SumWeights(k))
+	fmt.Println("BNB UB3\t", fmt.Sprintf("%15s", bnb3Time),
+		"| value =", bnb3Solver.best.SumValues(k), "| weight =", bnb3Solver.best.SumWeights(k), "| nodes =", bnb3Solver.nodesExplored)
 
 	// Speedup calcs
 	fmt.Println()
